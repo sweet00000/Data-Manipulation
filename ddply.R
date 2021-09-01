@@ -19,23 +19,22 @@ data[, "genotype"] <- y                  #add the new genotype column back to th
 by_P <- group_by(data, pedigree)         #group the rows by their pedigree numbers
 
 by_P <- summarize(by_P,                  #in each group average the values by column
+                  
+                  perimeter = mean(perimeter, na.rm = TRUE)
+                  
                   genotype = mean(genotype, na.rm = TRUE),
           
                   mean.area = mean(area, na.rm = TRUE), 
           
-                  mean.tomato.pericarp.area = mean(tomato.pericarp.area,
-                                                   na.rm = TRUE), 
-           
-                  mean.tomato.pericarp.area.ratio = mean(tomato.pericarp.area.ratio,
-                                                         na.rm = TRUE), 
-          
-                  mean.tomato.pericarp.thickness = mean(tomato.pericarp.thickness,
-                                                        na.rm = TRUE),
-          
-                  mean.tomato.pericarp.thickness.ratio = mean(tomato.pericarp.thickness.ratio,
-                                                              na.rm = TRUE))
+                  mean.tomato.pericarp.area = mean(tomato.pericarp.area, na.rm = TRUE), 
+                  
+                  mean.tomato.pericarp.area.ratio = mean(tomato.pericarp.area.ratio, na.rm = TRUE),
+                  
+                  mean.tomato.pericarp.thickness = mean(tomato.pericarp.thickness, na.rm = TRUE),
+                  
+                  mean.tomato.pericarp.thickness.ratio = mean(tomato.pericarp.thickness.ratio, na.rm = TRUE))
 
-x <- pull(by_P, var = genotype)          #select and work within the column headed by "genotyope" to replace the numeric representative with the date wanted
+x <- pull(by_P, var = genotype)          #select and work within the column headed by "genotyope" to replace the numeric representative with the correct data 
 
 y <- str_replace(x, "1", "A")            #in the genotype columnn, replace all 1s with A 
 z <- str_replace(y, "2", "H")            #in the genotype columnn with all 1s with A, replace all 2s with H
@@ -44,4 +43,4 @@ x <- str_replace(z, "3", "B")            #in the genotype columnn with all 1s re
 by_P[, "genotype"] <- x                  #add the new genotype column back to the averaged spreadsheet
 
                                          #make a new csv file with the averaged values
-write.csv(by_P, file="output/AVE.150151.csv", row.names=FALSE) 
+write.csv(by_P, file="R/output/AVE.150151.csv", row.names=FALSE) 
