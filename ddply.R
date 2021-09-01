@@ -5,10 +5,7 @@ data <- read.csv("21s1501.csv")          #read and work in "21s1501.csv", set as
 library(plyr)                            #download plyr
 library(dplyr)                           #download dplyr
 library(stringr)                         #download stringr 
-head(data)                               #show first couple rows of data to check if the read.csv worked
-
 ############################################
-
 x <- pull(data, var = genotype)          #select and work within the column headed by "genotyope"
    
 y <- str_replace(x, "A", "1")            #in the genotype columnn, replace all A's with 1 
@@ -39,7 +36,6 @@ by_P <- summarize(by_P,                  #in each group average the values by co
                                                               na.rm = TRUE))
 
 x <- pull(by_P, var = genotype)          #select and work within the column headed by "genotyope" to replace the numeric representative with the date wanted
-
 
 y <- str_replace(x, "1", "A")            #in the genotype columnn, replace all 1s with A 
 z <- str_replace(y, "2", "H")            #in the genotype columnn with all 1s with A, replace all 2s with H
