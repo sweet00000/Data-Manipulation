@@ -1,24 +1,42 @@
-
-setwd("C:/Users/Sweet/Desktop/TOMATOE/done/MS/fruitscans_21S121")
+setwd("C:/Users/Sweet/Desktop/TOMATOE/KT excels")
 files <- list.files(pattern = ".csv", recursive=F)
 newtable<-NULL
 
 for (i in 1:length(files)){
   
-  setwd("C:/Users/Sweet/Desktop/TOMATOE/done/MS/fruitscans_21S121")
- 
-  head1<-basename(files[i])
+  setwd("C:/Users/Sweet/Desktop/TOMATOE/KT excels")
   
-  data <- read.csv(head1 , header=F)
+  filename<-basename(files[i])
   
-  head2 <- data[2,2]
- 
-  head <- cbind(head1,head2)
+  data <- read.csv(filename, header=F)
+  
+  data$V1 <- as.numeric(data$V1)
+  
+  data[is.na(data)] <- "delete"
+  
+  colnames(data)[1] <- "num"
+  
+  data <- data[!(data$num=="delete"),]
+  
+  head <- cbind(filename,data)
   
   newtable <- rbind(newtable,head)
   
-  }
+}
 
-setwd("C:/Users/Sweet/Desktop/TOMATOE/done/MS/fruitscans_21S121")
-write.csv(newtable,"final_merged.csv")
+colnames(newtable)[2:12] = c("num", 
+                             "area",
+                             "average_red",
+                             "average_green",
+                             "average_blue",
+                             "average_luminosity",
+                             "average_l_value",
+                             "average_a_value",
+                             "average_b_value",
+                             "average_hue",
+                             "average_chroma")
+
+setwd("C:/Users/Sweet/Desktop/TOMATOE")
+
+write.csv(newtable,"Merged_KTexcels.csv")
 
